@@ -37,7 +37,7 @@ int DeleteTop (int a[],int RightBorder)
         if (right_doughters_index >= RightBorder)
             right_doughters_index = parents_index;
 
-        if ((a[parents_index] >= a[left_doughters_index]) && (a[parents_index] >= a[right_doughters_index]))
+        if ((a[parents_index] >= a[left_doughters_index]) && (a[parents_index] <= a[right_doughters_index]))
             break;
 
         if (a[left_doughters_index] > a [right_doughters_index])
@@ -65,13 +65,13 @@ void HeapSort(int a[] ,int RightBorder)
 int main()
 {
     int arrays_size,t;
-    freopen ("sort.in","r",stdin);
-    freopen ("sort.out","w",stdout);
+//    freopen ("sort.in","r",stdin);
+//    freopen ("sort.out","w",stdout);
     cin >> arrays_size;
     int a[arrays_size + 10];
     for (int i = 0; i < arrays_size; i++)
         cin >> a[i];
-    HeapSort(a,arrays_size);
+    HeapSort(a,arrays_size + 1);
     for (int i = 0; i < arrays_size; i++)
         cout << result[i] << " ";
 	return 0;
