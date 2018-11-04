@@ -2,21 +2,16 @@
 
 using namespace std;
 
-char c[10001]; // стек из символов
+int c[10001]; // стек из чисел
 int rB = -1; // указатель на конец стека
-bool isEmpty() // функция, проверяющая закончился ли стек
-{
-    return rB == -1;
 
-}
-
-void push(char ch) // добавление в стек символа
+void push(int ch) // добавление в стек числа
 {
     rB++;
     c[rB] = ch;
 }
 
-int pop() // Если стек не пуст удаляет элемент
+int pop() // удаление + возвращение числа
 {
     int i = c[rB];
     rB--;
@@ -26,7 +21,47 @@ int pop() // Если стек не пуст удаляет элемент
 int main ()
 {
     string s;
-    int res = 0;
+    freopen("postfix.in","r",stdin);
+    freopen("postfix.out","w",stdout);
+    while (cin >> s)
+    {
+        int res = 0, var1, var2;
+        if (s[0] - 48 >= 0) // Если стока является числом, то
+        {
+            push (s[0] - 48); // Пушим число
+        }
+        else //Если нет, то выполняем операцию
+        {
+            var2 = pop ();
+            var1 = pop ();
+            switch (s[0])
+            {
+                case '+':
+                    res = var1 + var2;
+                    push(res);
+                    break;
 
+                case '-':
+                    res = var1 - var2;
+                    push(res);
+                    break;
+
+                case '*':
+                    res = var1 * var2;
+                    push(res);
+                    break;
+
+                case '/':
+                    res = var1 / var2;
+                    push(res);
+                    break;
+
+            }
+
+        }
+
+    }
+    cout << pop();
+    return 0;
 
 }
