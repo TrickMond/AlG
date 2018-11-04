@@ -2,13 +2,15 @@
 
 using namespace std;
 
-int leftB = -1,rightB = -1, v[1000001];
-addToQueue(int value)
+int leftB = -1, // указатель на начало ("голову") очереди
+    rightB = -1, // указатель на конец ("хвост") очереди
+    v[1000001]; // очередь
+addToQueue(int value) // добавление в конец очереди
 {
     rightB++;
     v[rightB] = value;
 }
-removeFromQueue ()
+removeFromQueue () // удаление с начала очереди, и вывод элемента на жкран
 {
     leftB++;
     printf("%d\n",v[leftB]);

@@ -2,35 +2,35 @@
 
 using namespace std;
 
-char c[10001];
-int rB = -1;
+char c[10001]; // стек из символов
+int rB = -1; // указатель на конец стека
 
-bool isEmpty()
+bool isEmpty() // функция, проверяющая закончился ли стек
 {
     return rB == -1;
 
 }
 
-void push(char ch)
+void push(char ch) // добавление в стек символа
 {
     rB++;
     c[rB] = ch;
 }
 
-void pop()
+void pop() // Если стек не пуст удаляет элемент
 {
     if (!isEmpty())
         rB--;
 }
 
-bool check(string s)
+bool check(string s) // проверка скобок
 {
     char t;
     rB = -1;
     for (int i = 0; i < s.length(); i++)
-        if (s[i] == '(' || s[i] == '[')
+        if (s[i] == '(' || s[i] == '[') // если открывающие скобки, то закидываем в стек
             push(s[i]);
-        else if (s[i] == ')' && c[rB] == '(' || s[i] == ']' && c[rB] == '[')
+        else if (s[i] == ')' && c[rB] == '(' || s[i] == ']' && c[rB] == '[') // иначе, проверяем верхний элемент стека, и заданую закрывающую скобку, если они одинаковы, то удаляем верхний эл. стека, иначе ошибка
         {
             pop();
         }
@@ -38,7 +38,7 @@ bool check(string s)
         {
 			return false;
         }
-    if (isEmpty())
+    if (isEmpty()) // если дошли до конца и файл оказался пуст, то возвращаем 1, иначе 0
     {
         return true;
     }

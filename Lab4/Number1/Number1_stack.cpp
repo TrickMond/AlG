@@ -2,24 +2,25 @@
 
 using namespace std;
 
-int rightB = -1, v[1000001], po = 0;
+int rightB = -1, // указатель на крайний элемент стека
+    v[1000001]; // стек
 
-void push (int value)
+void push (int value) // функция, добавления элемента в конец стека
 {
     rightB++;
     v[rightB] = value;
 }
 
-void pop()
+void pop() // функция, удаления элемента из конца стека, и вывода этого элемента на экран / в файл
 {
     printf("%d\n", v[rightB]);
     rightB--;
 }
 
-char s;
 
 int main()
 {
+    char s;
     freopen ("stack.in","r",stdin);
     freopen("stack.out","w",stdout);
     int number,value;
@@ -27,13 +28,13 @@ int main()
     for (int i = 0; i < number; i++)
     {
         scanf("\n%c", &s);
-        if (s=='+')
+        if (s=='+') // Если встречаем +, считываем еще стоку
         {
             scanf("%d", &value);
             push (value);
         } else
         {
-            pop();
+            pop(); // Иначе удаляем элемент
         }
     }
     return 0;
