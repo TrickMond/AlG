@@ -2,23 +2,22 @@
 
 using namespace std;
 
-int result [100000];
-pair <int, int> c[10001]; // стек из чисел
-int rB = -1; // указатель на конец стека
+pair <long long, long long> c[1000001]; // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+long long rB = -1; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
 
-void push(pair <int, int> ch) // добавление в стек числа
+void push(pair <long long, long long> ch) // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 {
     rB++;
     c[rB] = ch;
 }
 
-void MakeHeap (pair <int,int> a[], int RightBorder)
+void MakeHeap (pair <long long, long long> a[], long long RightBorder)
 {
-    int parents_index;
-    for (int i =0; RightBorder > i; i++)
+    long long parents_index;
+    for (long long i =0; RightBorder > i; i++)
     {
-    int doughters_index = i;
+    long long doughters_index = i;
         while (doughters_index!= 0)
         {
             parents_index = (doughters_index - 1)/2;
@@ -30,21 +29,24 @@ void MakeHeap (pair <int,int> a[], int RightBorder)
     }
 }
 
-int DeleteTop (pair <int,int> a[],int RightBorder)
+long long DeleteTop (pair <long long, long long> a[],long long RightBorder)
 {
-    int max_value = a [0].first;
+    long long max_value = a [0].first;
     a[0] = a[RightBorder - 1];
-    int parents_index = 0,
+    long long parents_index = 0,
         max_doughters_index;
     while (true)
     {
-        int left_doughters_index = parents_index*2 + 1,
+        long long left_doughters_index = parents_index*2 + 1,
             right_doughters_index = parents_index*2 + 2;
 
-        if (left_doughters_index >= RightBorder) // Индекс дочерней записи выпадает из дерева
-            left_doughters_index = parents_index;
-        if (right_doughters_index >= RightBorder)
+        if (!(left_doughters_index >= RightBorder))
+        {
+            if (right_doughters_index >= RightBorder)
             right_doughters_index = parents_index;
+        } else
+            left_doughters_index = parents_index;
+
 
         if ((a[parents_index].first >= a[left_doughters_index].first) && (a[parents_index].first >= a[right_doughters_index].first))
             break;
@@ -62,65 +64,64 @@ int DeleteTop (pair <int,int> a[],int RightBorder)
     return max_value;
 }
 
-int HeapSort(pair <int,int> a[] ,int RightBorder)
+void HeapSort(pair <long long,long long> a[] ,long long RightBorder)
 {
-    if (RightBorder != 0)
-    {
 
         MakeHeap(a,RightBorder);
 
-        int minimum = DeleteTop(a,RightBorder);
-        return minimum;
-    }
-    else return -1;
+        long long minimum = DeleteTop(a,RightBorder);
+        printf ("%d\n", minimum);
 }
 
 int main()
 {
-    int arrays_size,t;
-//    freopen ("priorityqueue.in","r",stdin);
-//    freopen ("priorityqueue.out","w",stdout);
+    long long arrays_size,t;
+    freopen ("priorityqueue.in","r",stdin);
+    freopen ("priorityqueue.out","w",stdout);
     string s;
-    pair <int,int> p;
-    int value,
+    pair <long long,long long> p;
+    long long value,
         counter = 0,
         x,
         adress,
-        r = 0,
+        key = 0,
         va;
     while (cin >> s)
     {
         switch (s[0])
         {
         case 'p':
-            p.second = r + 1;
-            cin >> value;
+            p.second = key + 1;
+            scanf("%d",&value);
             p.first = value;
             push (p);
+            MakeHeap(c, counter);
+//            cout << "Pushed: => " << p.first << " KEY: " << p.second << endl;
             counter++;
-            r++;
+            key++;
             break;
         case 'e':
-
-            x = HeapSort(c,counter);
-            if (x!=-1)
+            if (rB >= 0)
             {
-                cout << x << endl;
+                HeapSort(c,counter);
                 counter--;
                 rB--;
-            } else cout << '*' << endl;
+                break;
+            } else printf ("*\n");
             break;
         case 'd':
-            cin >> adress >> value;
-            for (int i = 0; i < counter; i++)
+            scanf("%d%d",&adress,&value);
+            for (long long i = 0; i < key; i++)
             {
                 if (c[i].second == adress)
                 {
                     c[i].first = value;
+                    MakeHeap(c, counter);
+//                    printf ("Changed element with KEY %d to value %d\n",adress, c[i].first);
                 }
             }
             break;
         }
     }
-	return 0;
+    return 0;
 }
