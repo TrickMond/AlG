@@ -4,7 +4,7 @@
 using namespace std;
 
 pair <long long, long long> data [1000000];
-//in first priority key
+//in first key
 //in second value
 
 
@@ -57,10 +57,12 @@ pair <long long, long long> data [1000000];
         return true;
     }
 
-    void decreaseKey(long long value, long long priority_new) {
+void decreaseKey(long long value, long long priority_new) {
         for (long long i = 1; i <= size; i++) {
-            if (data[i].second == value) {
-                if (priority_new < data[i].first) {
+            if (data[i].second == value)
+            {
+                if (priority_new < data[i].first)
+                {
                     data[i].first = priority_new;
                     siftUp(i);
                 }
